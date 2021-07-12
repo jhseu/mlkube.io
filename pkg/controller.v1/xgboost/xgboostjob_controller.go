@@ -54,7 +54,7 @@ var (
 func NewReconciler(mgr manager.Manager) *XGBoostJobReconciler {
 	r := &XGBoostJobReconciler{
 		Client: mgr.GetClient(),
-		Log:    ctrl.Log.WithName("controllers").WithName("XGBoostJob"),
+		Log:    ctrl.Log.WithName("controllers").WithName(xgboostv1.Kind),
 		Scheme: mgr.GetScheme(),
 	}
 	r.recorder = mgr.GetEventRecorderFor(r.ControllerName())
@@ -156,7 +156,7 @@ func (r *XGBoostJobReconciler) GetAPIGroupVersion() schema.GroupVersion {
 }
 
 func (r *XGBoostJobReconciler) GetGroupNameLabelValue() string {
-	return xgboostv1.GroupName
+	return xgboostv1.GroupVersion.Group
 }
 
 func (r *XGBoostJobReconciler) GetDefaultContainerName() string {
@@ -164,7 +164,7 @@ func (r *XGBoostJobReconciler) GetDefaultContainerName() string {
 }
 
 func (r *XGBoostJobReconciler) GetDefaultContainerPortName() string {
-	return xgboostv1.DefaultContainerPortName
+	return xgboostv1.DefaultPortName
 }
 
 func (r *XGBoostJobReconciler) GetJobRoleKey() string {

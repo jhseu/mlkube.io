@@ -93,14 +93,14 @@ func (tc *TFController) addTFJob(obj interface{}) {
 				return
 			}
 
-			client, err := k8sutil.NewCRDRestClient(&tfv1.SchemeGroupVersion)
+			client, err := k8sutil.NewCRDRestClient(&tfv1.GroupVersion)
 
 			if err == nil {
 				if err1 := metav1unstructured.SetNestedField(un.Object, statusMap, "status"); err1 != nil {
 					logger.Errorf("Could not set nested field: %v", err1)
 				}
 				logger.Infof("Updating the job to: %+v", un.Object)
-				err = client.UpdateStatus(un, tfv1.Plural)
+				err = client.UpdateStatus(un, "tfjobs")
 				if err != nil {
 					logger.Errorf("Could not update the TFJob: %v", err)
 				}
